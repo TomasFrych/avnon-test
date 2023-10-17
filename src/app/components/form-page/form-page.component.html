@@ -1,0 +1,71 @@
+<div class="wrapper">
+  <form class="form" [formGroup]="formPageGroup" (submit)="onSubmit()">
+    <div class="alias-wrapper" formArrayName="aliases">
+      <div
+        class="question-wrapper"
+        *ngFor="let alias of aliases.controls; let i = index"
+      >
+        <div>
+          Question: {{ questions[i].question
+          }}{{ questions[i].is_required ? "*" : "" }}
+        </div>
+        <input
+          *ngIf="!questions[i].checkboxes"
+          type="text"
+          [formControlName]="i"
+        />
+        <ng-container *ngIf="questions[i].checkboxes as checkboxQuestions">
+          <div [formArrayName]="i">
+            <div
+              *ngFor="
+                let checkbox of getCheckboxArray(i).controls as controls;
+                let inIndex = index
+              "
+            >
+              <div
+                class="checkbox-wrapper"
+                *ngIf="!isOwnAnswerInput(controls, inIndex, questions, i)"
+              >
+                <input
+                  id="alias-{{ inIndex }}-{{ i }}"
+                  type="checkbox"
+                  [formControlName]="inIndex"
+                />
+                <label for="alias-{{ inIndex }}-{{ i }}">{{
+                  checkboxQuestions[inIndex]
+                  }}</label>
+              </div>
+              <div
+                class="input-wrapper"
+                *ngIf="
+                  isOwnAnswerInput(controls, inIndex, questions, i) &&
+                  controls.at(-2)?.value
+                "
+              >
+                <label for="alias-{{ inIndex }}-{{ i }}">{{
+                  checkboxQuestions[inIndex]
+                  }}</label>
+                <input
+                  id="alias-{{ inIndex }}-{{ i }}"
+                  type="text"
+                  [formControlName]="inIndex"
+                />
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <span class="error-span" *ngIf="isInputInvalid(alias)">{{
+          FIELD_IS_REQUIRED
+          }}</span>
+      </div>
+    </div>
+    <button (click)="openModal()" class="add-question btn" type="button">
+      {{ ADD_QUESTION }}
+    </button>
+    <button class="review-answers btn" type="submit">
+      {{ REVIEW_MY_ANSWERS }}
+    </button>
+  </form>
+
+  <app-modal *ngIf="isModalOpen | async" (receiveData)="receiveData($event)" />
+</div>

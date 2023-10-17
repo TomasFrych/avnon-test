@@ -1,0 +1,47 @@
+<div *ngIf="isModalOpen$ | async" class="form-wrapper">
+  <button (click)="closeModal()" class="close-btn" type="button" [innerHTML]="text.button.close_code"></button>
+  <form [formGroup]="modalForm" class="question-form" (submit)="onSubmit()">
+    <div class="inner-wrapper">
+      <h3 class="modal-header">{{ text.add_new_questions }}</h3>
+      <div *ngIf="!isCheckbox && !isInput" class="question-type">
+        <h4>{{ text.select_question_type }}</h4>
+        <button type="button" (click)="onCheckboxSelect()">{{ text.button.checkbox }}</button>
+        <button type="button" (click)="onInputSelect()">{{ text.button.paragraph }}</button>
+      </div>
+
+      <div *ngIf="isInput || !isInput && isCheckbox">
+        <h4>{{ text.write_a_question }}</h4>
+        <input type="text" formControlName="question">
+        <span class="error-span"
+              *ngIf="questionInput?.invalid && (questionInput?.touched || questionInput?.dirty)">{{ text.field_is_required }}</span>
+      </div>
+
+      <div class="checkboxes-wrapper" *ngIf="isCheckbox" formArrayName="aliases">
+        <h4>{{ text.checkboxes }} {{ aliases.controls.length }}/{{availableCheckboxNumber}}</h4>
+        <div class="input-wrapper" *ngFor="let alias of aliases.controls; let i=index">
+          <div class="checkbox-wrapper">
+            <label for="alias-{{ i }}">{{ text.checkbox_text }}:</label>
+            <input id="alias-{{ i }}" type="text" [formControlName]="i">
+          </div>
+          <span class="error-span"
+                *ngIf="alias.invalid && (alias.touched || alias.dirty)">{{ text.field_is_required }}
+          </span>
+        </div>
+        <button class="add-checkbox-btn" type="button" (click)="addAlias()">{{ text.button.add_answer_option}}</button>
+      </div>
+
+      <div *ngIf="isInput || isCheckbox">
+        <div class="checkbox-wrapper" *ngIf="isCheckbox">
+          <input id="own_answer" type="checkbox" formControlName="own_answer">
+          <label for="own_answer">{{ text.allow_own_answer }}</label>
+        </div>
+
+        <div class="checkbox-wrapper">
+          <input id="is_required" type="checkbox" formControlName="is_required">
+          <label for="is_required">{{ text.field_is_required }}</label>
+        </div>
+      </div>
+    </div>
+    <button class="submit-btn" type="submit">{{ text.button.submit }}</button>
+  </form>
+</div>

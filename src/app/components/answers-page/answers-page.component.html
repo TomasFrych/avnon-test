@@ -1,0 +1,43 @@
+<div class="answer-page">
+  <h2>{{ TITLE }}</h2>
+
+  <ng-container *ngIf="answers$ | async as answersArr">
+    <ng-container *ngIf="!answersArr.length">
+      <h3 class="no-answers">Hmm... There is no answers yet.</h3>
+    </ng-container>
+
+    <ng-container *ngFor="let answers of answersArr">
+      <div class="answers">
+        <div class="answer-wrapper">
+          <div class="answer" *ngFor="let answer of answers">
+            <div>{{ QUESTION }}: {{ answer.question }}</div>
+            <div *ngIf="!Array.isArray(answer.answer)">
+              {{ ANSWER }}: {{ answer.answer }}
+            </div>
+            <ng-container *ngIf="Array.isArray(answer.answer)">
+              <div
+                *ngFor="let checkboxQuestion of answer.answer; let i = index"
+              >
+                <p *ngIf="checkboxQuestion.selected">
+                  {{
+                  checkboxQuestion.own_answer &&
+                  i === answer.answer.length - 1
+                    ? checkboxQuestion.checkbox +
+                    ": " +
+                    checkboxQuestion.selected
+                    : checkboxQuestion.checkbox
+                  }}
+                </p>
+              </div>
+            </ng-container>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div>
+    <a [routerLink]="['/' + FORM_BUILDER_ROUTE]">{{ BACK_TO_FORM }}</a>
+  </div>
+</div>

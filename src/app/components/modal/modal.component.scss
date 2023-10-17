@@ -1,0 +1,125 @@
+:host {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  transform: translate(-50%, -50%);
+}
+
+.question-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: #FBDFE4;
+  border: 2px solid #CA6073;
+  border-radius: 4px;
+  min-height: 400px;
+  min-width: 400px;
+  justify-content: space-between;
+
+  input {
+    padding: 4px;
+  }
+
+  .inner-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 5px;
+  }
+
+  .modal-header {
+    margin: 0;
+    text-align: center;
+  }
+
+  .question-type {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    h4 {
+      text-align: center;
+    }
+
+    button {
+      padding: 3px 8px;
+      font-size: 18px;
+    }
+  }
+
+  .error-span {
+    display: block;
+    width: 100%;
+    color: #ff0000;
+  }
+
+  .submit-btn {
+    place-self: flex-end;
+    padding: 4px 16px;
+    border: solid 2px #75BA58;
+    background-color: #C3EAB3;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgb(195, 234, 179, 0.4);
+    }
+  }
+
+  .add-checkbox-btn {
+    padding: 4px 16px;
+    border: solid 2px #75BA58;
+    background-color: #C3EAB3;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: rgb(195, 234, 179, 0.4);
+    }
+  }
+
+  .checkboxes-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    input[type='checkbox'] {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 4px;
+  padding: 2px 4px;
+  background: transparent;
+}
